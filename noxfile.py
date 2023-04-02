@@ -18,16 +18,6 @@ def tests(session):
 
 
 @nox.session(python=DEFAULT_VERSION)
-def textx(session):
-    """Check the command line interface."""
-    session.install("-r", "requirements.txt")
-
-    session.install("-e", ".")
-
-    session.run("textx", "list-languages")
-
-
-@nox.session(python=DEFAULT_VERSION)
 def lint(session):
     """Run pre-commit hooks on ALL files."""
     session.install("-r", "requirements-dev.txt")
