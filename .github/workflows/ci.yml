@@ -70,7 +70,7 @@ jobs:
         with: {name: python-distribution-files, path: dist/}
       - name: Run tests
         run: >-
-          pipx run nox -e tests --force-color
+          pipx run nox -e tests --force-color --force-python ${{ matrix.python }}
       - name: Generate coverage report
         run: pipx run coverage lcov -o coverage.lcov
       - name: Upload partial coverage report
