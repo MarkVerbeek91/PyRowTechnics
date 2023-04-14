@@ -10,7 +10,7 @@ DEFAULT_VERSION = PYTHON_VERSIONS[-1]
 @nox.session(python=PYTHON_VERSIONS)
 def tests(session):
     """Run the test suite."""
-    session.install("-r", "requirements-dev.txt")
+    session = base_install(session)
 
     session.install("-e", ".")
 
@@ -59,31 +59,12 @@ def clean(_):
     remove_egg_info()
 
 
-def remove_build_folders():
-    for p in ("build", "dist", "docs/_build"):
-        shutil.rmtree(p, ignore_errors=True)
-
-
-def remove_egg_info():
-    for p in Path("src").glob("*.egg-info"):
-        shutil.rmtree(p, ignore_errors=True)
-
-
 @nox.session(python=DEFAULT_VERSION)
 def publish(session) -> None:
     """Build and publish local version."""
-    # TODO do quality check first, like testing and linting.
-
     build(session)
 
-    args = [
-        *["--repository", "atrifactory-de"],
-        *["--config-file", str(Path(__file__).parent / "secrets" / ".pypirc")],
-        *["--cert", "secrets/artifactory-de.cer"],
-        "--verbose",
-        "dist/*",
-    ]
-    session.run("twine", "upload", *args)
+    session.run("twine", "upload", "-r", "testpypi", "dist/*")
 
 
 @nox.session(python=DEFAULT_VERSION)
@@ -102,13 +83,18 @@ def docs(session):
 def doctest(session):
     """Run doctests in documentation."""
 
-    session.install("-r", "docs/requirements.txt")
+    session.install("-r", "requirements-dev.txt")
 
     build_type = "doctest"
 
     args = get_doc_build_args(build_type)
 
     session.run("sphinx-build", *args)
+
+
+def base_install(session):
+    """Do base install"""
+    return session.install("-r", "requirements-dev.txt")
 
 
 def get_doc_build_args(build_type):
@@ -118,3 +104,13 @@ def get_doc_build_args(build_type):
         "docs",
         f"docs/_build/{build_type}",
     ]
+
+
+def remove_build_folders():
+    for p in ("build", "dist", "docs/_build"):
+        shutil.rmtree(p, ignore_errors=True)
+
+
+def remove_egg_info():
+    for p in Path("src").glob("*.egg-info"):
+        shutil.rmtree(p, ignore_errors=True)
