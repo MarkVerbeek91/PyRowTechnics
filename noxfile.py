@@ -4,7 +4,7 @@ from pathlib import Path
 import nox
 
 PYTHON_VERSIONS = ("3.8", "3.9", "3.10", "3.11")
-DEFAULT_VERSION = PYTHON_VERSIONS[-1]
+DEFAULT_VERSION = "3.10"
 
 
 @nox.session(python=PYTHON_VERSIONS)
