@@ -1,5 +1,5 @@
 # default position is at the catch
-from math import sin, cos, sqrt, pi
+from math import cos, pi, sin, sqrt
 
 from matplotlib import pyplot as plt
 
@@ -19,7 +19,12 @@ lower_arm = [LOWER_ARM_LENGTH, 0]
 
 class Rower:
     body_parts = [
-        heel, lower_leg, upper_leg, body, upper_arm, lower_arm,
+        heel,
+        lower_leg,
+        upper_leg,
+        body,
+        upper_arm,
+        lower_arm,
     ]
 
     def __iter__(self):
@@ -28,11 +33,11 @@ class Rower:
 
     def get_xs(self):
         xs = [p[0] for p in iter(self)]
-        return [sum(xs[:i+1]) for i in range(len(xs))]
+        return [sum(xs[: i + 1]) for i in range(len(xs))]
 
     def get_ys(self):
         ys = [p[1] for p in iter(self)]
-        return [sum(ys[:i+1]) for i in range(len(ys))]
+        return [sum(ys[: i + 1]) for i in range(len(ys))]
 
     @staticmethod
     def rotate(vector, angle):
@@ -41,12 +46,15 @@ class Rower:
 
     def pose(self, angles):
         for i, (vector, angle) in enumerate(zip(self.body_parts[1:], angles)):
-            self.body_parts[i+1] = self.rotate(vector, angle)
+            self.body_parts[i + 1] = self.rotate(vector, angle)
 
 
 rower = Rower()
+
+catch_angles = [pi / 2, -pi / 3, pi / 2, pi / 4, 0]  # noqa
+
 # rower.pose([0]*6)
-# rower.pose([pi/2, -pi/3, pi/2, pi/4, 0])
+# rower.pose(catch_angles)
 x_data, y_data = rower.get_xs(), rower.get_ys()
 
 assert x_data[-1] == 2.2
@@ -58,4 +66,4 @@ assert x_data[-1] == 2.2
 plt.plot(x_data, y_data, "o-")
 plt.show()
 
-# handle_postion = sum()
+# handle_position = sum()

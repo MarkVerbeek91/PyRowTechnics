@@ -30,27 +30,21 @@ def test_joints_enum__number_of_joints__equals_4():
 
 
 class Pose(SimpleNamespace):
-
     def __init__(self, **kwargs: Any):
-        angles = kwargs.pop("angles", [0]*len(JointNames))
+        angles = kwargs.pop("angles", [0] * len(JointNames))
         pose = dict(map(lambda x: (str(x[0]), x[1]), zip(JointNames, angles)))
         super().__init__(**pose)
 
 
-@pytest.mark.parametrize(
-    "joint",
-    JointNames
-)
+@pytest.mark.parametrize("joint", JointNames)
 def test_pose__by_default__all_joint_zero(joint):
     assert getattr(Pose(), str(joint)) == 0
 
 
 DEGREE90 = pi / 2
 
-@pytest.mark.parametrize(
-    "joint",
-    JointNames
-)
+
+@pytest.mark.parametrize("joint", JointNames)
 def test_pose__set_joints_all_90d__all_joint_90d(joint):
     assert getattr(Pose(angles=[DEGREE90] * 4), str(joint)) == DEGREE90
 
