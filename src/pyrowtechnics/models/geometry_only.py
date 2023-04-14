@@ -49,21 +49,19 @@ class Rower:
             self.body_parts[i + 1] = self.rotate(vector, angle)
 
 
-rower = Rower()
+def main():
+    rower = Rower()
+    catch_angles = [pi / 2, -pi / 3, pi / 2, pi / 4, 0]  # noqa
+    # rower.pose([0]*6)
+    # rower.pose(catch_angles)
+    x_data, y_data = rower.get_xs(), rower.get_ys()
+    # assert x_data[-1] == 2.2
+    # rotated_leg = rower.rotate(upper_leg, 0)
+    # x_data = [heel_position[0], lower_leg[0], rotated_leg[0]]
+    # y_data = [heel_position[1], lower_leg[1], rotated_leg[1]]
+    plt.plot(x_data, y_data, "o-")
+    plt.show()
 
-catch_angles = [pi / 2, -pi / 3, pi / 2, pi / 4, 0]  # noqa
 
-# rower.pose([0]*6)
-# rower.pose(catch_angles)
-x_data, y_data = rower.get_xs(), rower.get_ys()
-
-assert x_data[-1] == 2.2
-
-# rotated_leg = rower.rotate(upper_leg, 0)
-# x_data = [heel_position[0], lower_leg[0], rotated_leg[0]]
-# y_data = [heel_position[1], lower_leg[1], rotated_leg[1]]
-
-plt.plot(x_data, y_data, "o-")
-plt.show()
-
-# handle_position = sum()
+if __name__ == "__main__":
+    main()

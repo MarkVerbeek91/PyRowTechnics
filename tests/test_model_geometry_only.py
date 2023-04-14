@@ -5,6 +5,8 @@ from typing import Any
 
 import pytest
 
+from pyrowtechnics.models.geometry_only import Rower  # noqa
+
 
 class BodyParts(Enum):
     lower_leg = 0
@@ -49,10 +51,10 @@ def test_pose__set_joints_all_90d__all_joint_90d(joint):
     assert getattr(Pose(angles=[DEGREE90] * 4), str(joint)) == DEGREE90
 
 
-class Rower:
+class RowerClass:
     def __init__(self, start_pose):
         self.start_pose = start_pose
 
 
 def test_rower__in_flat_pose__hand_at_max_x_distance():
-    assert Rower(Pose())
+    assert RowerClass(Pose())

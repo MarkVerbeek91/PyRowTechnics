@@ -10,7 +10,7 @@ DEFAULT_VERSION = PYTHON_VERSIONS[-1]
 @nox.session(python=PYTHON_VERSIONS)
 def tests(session):
     """Run the test suite."""
-    session = base_install(session)
+    base_install(session)
 
     session.install("-e", ".")
 
@@ -20,7 +20,7 @@ def tests(session):
 @nox.session(python=DEFAULT_VERSION)
 def lint(session):
     """Run pre-commit hooks on ALL files."""
-    session.install("-r", "requirements-dev.txt")
+    base_install(session)
     session.install("pre-commit")
 
     args = [
@@ -44,7 +44,7 @@ def mypy_typing(session):
 @nox.session(python=DEFAULT_VERSION)
 def build(session):
     """Build wheels for distribution."""
-    session.install("-r", "requirements-dev.txt")
+    base_install(session)
 
     clean(session)
 
@@ -83,7 +83,7 @@ def docs(session):
 def doctest(session):
     """Run doctests in documentation."""
 
-    session.install("-r", "requirements-dev.txt")
+    base_install(session)
 
     build_type = "doctest"
 
@@ -94,7 +94,7 @@ def doctest(session):
 
 def base_install(session):
     """Do base install"""
-    return session.install("-r", "requirements-dev.txt")
+    session.install("-r", "requirements-dev.txt")
 
 
 def get_doc_build_args(build_type):
