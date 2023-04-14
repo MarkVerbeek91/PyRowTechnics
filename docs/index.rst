@@ -1,8 +1,8 @@
 ==============
-PyRowTechnicks
+PyRowTechnics
 ==============
 
-This is the documentation of **PyRowTechnicks**.
+This is the documentation of **PyRowTechnics**.
 
 .. note::
 

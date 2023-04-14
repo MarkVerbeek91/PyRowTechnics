@@ -1,6 +1,6 @@
 import pytest
 
-from pyrowtechnicks.skeleton import fib, main
+from PyRowTechnics.skeleton import fib, main
 
 __author__ = "Mark Verbeek"
 __copyright__ = "Mark Verbeek"
